@@ -1,0 +1,25 @@
+﻿@using DangKiMonHoc.Models;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Trang đăng ký môn học";
+}
+
+@if (Session["CurrentLogin"] == null)
+{
+    Response.Redirect("~/Accounts/Index");
+}
+
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="fa fa-bullhorn"></i>
+            <h3>Thông báo</h3>
+        </div>
+        <div class="widget-content">
+            <div class="tabbable">
+                  <h1> trang của sinh viên</h1>
+            </div>
+        </div>
+    </div>
+</div>

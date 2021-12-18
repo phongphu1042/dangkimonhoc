@@ -1,0 +1,116 @@
+﻿
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </a>
+            @if (Session["CurrentLogin"] != null)
+            {
+                if (Session["Pages"].ToString().Contains("Admin"))
+                {
+                    @Html.ActionLink("Trang Đăng Quản Lý Đăng Ký - Trường Đại Học Công Nghệ Sài Gòn", "Index", "Admin", null, new { @class = "brand" })
+                }
+                else
+                {
+                    @Html.ActionLink("Trang Đăng Ký Môn Học - Trường Đại Học Công Nghệ Sài Gòn", "Index", "SinhVien", null, new { @class = "brand" })
+                }
+            }
+            else
+            {
+                <div style="text-align:center" >
+                    @Html.ActionLink("Trường Đại Học Công Nghệ Sài Gòn - Khoa Công Nghệ Thông Tin", "Index", "Home", null, new { @class = "brand",@style="float:none"})
+
+                </div>
+            }
+            <div class="nav-collapse">
+                @if (Session["CurrentLogin"] != null)
+                {
+                    if (Session["Pages"].ToString().Contains("Admin"))
+                    {
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-user"></i> @Session["CurrentLogin"].ToString() <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="~/Admin/Profiles">Trang cá nhân</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">Cài đặt</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Accounts/Logout">Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-search pull-right">
+                            <input type="text" class="search-query" placeholder="Search">
+                        </form>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("Logout", "Accounts", FormMethod.Post, new { @class = "navbar-search pull-right" }))
+                        {
+
+                            <span class="current-info">Sinh viên: @Session["CurrentLogin"].ToString()</span>
+                            <input class="btn-login" id="dangxuat" type="submit" value="Đăng xuất" />
+                        }
+                    }
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+@if (!Session["Pages"].ToString().Contains("Login"))
+{
+    <div class="subnavbar">
+        <div class="subnavbar-inner">
+            <div class="container">
+                <ul class="mainnav">
+                    @if (Session["CurrentLogin"] != null && Session["Group"].ToString().Contains("2"))
+                    {
+                        <li>
+                            <a href="~/Student/Result"><i class="fa fa-user"></i><span>Trang Cá nhân</span></a>
+                        </li>
+                        <li>
+                            <a href="~/Student/Register"><i class="fa fa-check-square"></i><span>Đăng ký học tập</span></a>
+                        </li>
+                        <li>
+                            <a href="~/Student/Guide"><i class="fa fa-question-circle"></i><span>Hướng dẫn</span></a>
+                        </li>
+                    }
+                    else if (Session["CurrentLogin"] != null && Session["Group"].ToString().Contains("1"))
+                    {
+                        <li>
+                            <a href="~/Admin/Index"><i class="fa fa-dashboard"></i><span>Bảng điều khiển</span></a>
+                        </li>
+                        <li>
+                            <a href="~/Admin/Account"><i class="fa fa-users"></i><span>Quản lý tài khoản</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-check-square"></i><span>Quản lý ĐK tín chỉ</span></a>
+                        </li>
+                        <li>
+                            <a href="~/Admin/Monhoc"><i class="fa fa-users"></i><span>Danh sách môn học</span></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="~/Home/Index"><i class="fa fa-bullhorn"></i><span>Thông báo</span></a>
+                        </li>
+                        <li>
+                            <a href="http://stu.edu.vn/vi/304/chuong-trinh-dao-tao.html"><i class="fa fa-briefcase"></i><span>Chương trình đào tạo</span></a>
+                        </li>
+                        @*<li><a href="~/Home/Guide"><i class="fa fa-question-circle"></i><span>Hướng dẫn - Hỗ trợ</span></a></li>*@
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
