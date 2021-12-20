@@ -35,7 +35,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="~/Admin/Profiles">Trang cá nhân</a>
+                                        <a href="~/Admin/">Trang cá nhân</a>
                                     </li>
                                     <li>
                                         <a href="javascript:;">Cài đặt</a>
@@ -75,13 +75,16 @@
                     @if (Session["CurrentLogin"] != null && Session["Group"].ToString().Contains("2"))
                     {
                         <li>
-                            <a href="~/Student/Result"><i class="fa fa-user"></i><span>Trang Cá nhân</span></a>
+                            <a href="#"><i class="fa fa-user"></i><span>Trang Cá nhân</span></a>
                         </li>
                         <li>
-                            <a href="~/Student/Register"><i class="fa fa-check-square"></i><span>Đăng ký học tập</span></a>
+                            <a href="~/SinhVien/Register"><i class="fa fa-check-square"></i><span>Đăng ký học tập</span></a>
                         </li>
                         <li>
-                            <a href="~/Student/Guide"><i class="fa fa-question-circle"></i><span>Hướng dẫn</span></a>
+                            <a href="http://stu.edu.vn/vi/304/chuong-trinh-dao-tao.html"><i class="fa fa-briefcase"></i><span>Chương trình đào tạo</span></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/phongphu1042/dangkimonhoc/wiki/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn"><i class="fa fa-question-circle"></i><span>Hướng dẫn</span></a>
                         </li>
                     }
                     else if (Session["CurrentLogin"] != null && Session["Group"].ToString().Contains("1"))
@@ -93,10 +96,10 @@
                             <a href="~/Admin/Account"><i class="fa fa-users"></i><span>Quản lý tài khoản</span></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-check-square"></i><span>Quản lý ĐK tín chỉ</span></a>
+                            <a href="~/Admin/Qldangky"><i class="fa fa-check-square"></i><span>Quản lý ĐK tín chỉ</span></a>
                         </li>
                         <li>
-                            <a href="~/Admin/Monhoc"><i class="fa fa-users"></i><span>Danh sách môn học</span></a>
+                            <a href="~/Admin/Monhoc"><i class="fa fa-list"></i><span>Danh sách môn học</span></a>
                         </li>
                     }
                     else

@@ -515,6 +515,7 @@
     <Content Include="js\jquery-1.7.2.min.js" />
     <Content Include="js\jquery-1.8.3.min.js" />
     <Content Include="js\signin.js" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -542,6 +543,7 @@
     <Content Include="Views\SinhVien\Index.cshtml" />
     <Content Include="Views\Admin\Account.cshtml" />
     <Content Include="Views\Admin\Monhoc.cshtml" />
+    <Content Include="Views\Admin\Qldangky.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

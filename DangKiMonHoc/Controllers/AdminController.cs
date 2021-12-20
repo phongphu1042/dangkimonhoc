@@ -18,17 +18,18 @@ namespace DangKiMonHoc.Controllers
 
         # region Quản lý tài khoản
         [HttpGet]
-        public ActionResult Account(int? username)
+        public ActionResult Account(int? id)
         {
-            //ViewData["Nhom"] = db.group.ToList();
-            if (username == null)
+            ViewData["Nhom"] = id;
+            if (id == null)
             {
                 ViewData["ListUsers"] = db.web_user.OrderByDescending(us => us.username).ToList();
                 ViewData["ListSinhVien"] = db.sinhviens.OrderByDescending(sv => sv.mssv).ToList();
             }
             else
             {
-                ViewData["ListUsers"] = db.web_user.Where(u => u.group == username).OrderByDescending(u => u.username).ToList();
+                ViewData["ListUsers"] = db.web_user.Where(u => u.group == id).OrderByDescending(u => u.username).ToList();
+                ViewData["ListSinhVien"] = db.sinhviens.OrderByDescending(sv => sv.mssv).ToList();
             }
             return View();
         }
@@ -179,8 +180,19 @@ namespace DangKiMonHoc.Controllers
         [HttpGet]
         public ActionResult Monhoc()
         {
-            int hk = Convert.ToInt32(HttpContext.Session["HocKy"]);
-            ViewData["HocKy"] = db.hockies.OrderByDescending(u => u.mahocky).ToList();
+            ViewData["LoaiMon"] = db.loaimons.ToList();
+            ViewData["MonHoc"] = db.monhocs.ToList();
+            return View();
+        }
+        #endregion
+
+        #region Quản lý đăng ký
+        [HttpGet]
+        public ActionResult Qldangky()
+        {
+            ViewData["HocKy"] = db.hockies.ToList();
+            ViewData["LoaiMon"] = db.loaimons.ToList();
+            ViewData["MonHoc"] = db.monhocs.ToList();
             return View();
         }
         #endregion

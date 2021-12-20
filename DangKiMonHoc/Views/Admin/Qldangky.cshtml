@@ -1,0 +1,130 @@
+﻿
+@using DangKiMonHoc.Models;
+
+@{
+    ViewBag.Title = "Quản ký đăng ký";
+    var stt = 1;
+}
+<div class="span3">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="fa fa-check-square"></i>
+            <h3>Quản lý đăng ký</h3>
+        </div>
+        <div class="widget-content">
+            <ul>
+                <li>
+                    <a href="~/Admin/Qldangky">Danh sách đang mở đăng ký</a>
+                </li>
+                <li>
+                    <a href="~/Admin/Qldangky">Danh sách Môn học</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@if (Session["CurrentLogin"] != null && Session["Group"].ToString().Contains("1"))
+{
+    <div class="span9">
+        @if (TempData.ContainsKey("Error"))
+        {
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @TempData["Error"]
+            </div>
+        }
+        @if (TempData.ContainsKey("Success"))
+        {
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @TempData["Success"]
+            </div>
+        }
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-list"></i>
+                <h3>Danh sách mở đăng ký</h3>
+            </div>
+            <div class="widget-content">
+                <div style="margin-bottom: 20px">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#selectModal"><i class="fa fa-search"></i> Xem danh sách theo</button>
+                </div>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px"> STT</th>
+                            <th style="width: 80px"> Mã môn học</th>
+                            <th style="width: auto"> Tên môn học</th>
+                            <th style="width: 50px"> Số TC</th>
+                            <th style="width: 50px"> Số TCHP</th>
+                            <th style="width: 160px"> Học kỳ</th>
+                            <th class="td-actions" style="width: 100px"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mh in ViewData["MonHoc"] as List<monhoc>)
+                        {
+                            <tr>
+                                <td>@(stt++)</td>
+                                <td>@mh.mamon</td>
+                                <td>@mh.tenmon</td>
+                                <td>@mh.sotinchi</td>
+                                <td>@mh.sotinchihocphi</td>
+                                <td>
+                                    chưa có
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @*Tùy chọn*@
+                <div id="selectModal" class="modal-custom hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Tùy chọn</h3>
+                    </div>
+                    @using (Html.BeginForm("Qlkangky", "Admin", FormMethod.Post, new { @class = "form-custom" }))
+                    {
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="span4">
+                                    <div class="control-group">
+                                        <select id="hocky" name="hocky" class="span4">
+                                            <option disabled selected>Chọn thời gian</option>
+                                            <option value="leverup">Đang mở đăng ký</option>
+                                            <option value="leverdown">Đang đóng đăng ký</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span4">
+                                    <div class="control-group">
+                                        <select id="hocky" name="hocky" class="span4">
+                                            <option disabled selected>Chọn học kỳ</option>
+                                            @foreach (var item in ViewData["HocKy"] as List<hocky>)
+                                            {
+                                                <option value="@item.mahocky">@item.tenhocky</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Đóng</button>
+                            <button class="btn btn-primary">Xem danh sách lớp học phần</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    Response.Redirect("~/Accounts/Index");
+}
