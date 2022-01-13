@@ -9,7 +9,6 @@ namespace DangKiMonHoc.Models
     [Table("monhocmodk")]
     public partial class monhocmodk
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
@@ -25,6 +24,8 @@ namespace DangKiMonHoc.Models
         public DateTime? ngaydong { get; set; }
 
         public int? soluotmo { get; set; }
+
+        public bool? close { get; set; }
 
         public virtual hocky hocky { get; set; }
 

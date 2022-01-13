@@ -13,6 +13,7 @@ namespace DangKiMonHoc.Models
         public hocky()
         {
             dangkymonhocs = new HashSet<dangkymonhoc>();
+            monhocs = new HashSet<monhoc>();
             monhocmodks = new HashSet<monhocmodk>();
         }
 
@@ -25,6 +26,9 @@ namespace DangKiMonHoc.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dangkymonhoc> dangkymonhocs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<monhoc> monhocs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<monhocmodk> monhocmodks { get; set; }

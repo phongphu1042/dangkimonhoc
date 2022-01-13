@@ -26,23 +26,22 @@ namespace DangKiMonHoc
                       "~/js/base.js",
                       "~/js/faq.js",
                       "~/js/full-calendar/fullcalendar.min.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/js/jquery-ui.js"));
 
             bundles.Add(new StyleBundle("~/css/bootstrap").Include(
                       "~/css/bootstrap.min.css",
                       "~/css/bootstrap-responsive.min.css",
+                      "~/css/jquery-ui.css",
                       "~/css/font-awesome.css",
                       "~/css/style.css",
                       "~/css/pages/faq.css",
                       "~/css/pages/signin.css",
                       "~/css/pages/plans.css",
                       "~/css/pages/reports.css",
-                      "~/css/pages/dashboard.css"));
+                      "~/css/pages/dashboard.css"
+                      ));
 
-            //Ckeditor
-            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
-                      "~/ckeditor/ckeditor.js",
-                      "~/ckeditor/adapters/jquery.js"));
 
             //Datetimepicker
             bundles.Add(new StyleBundle("~/css/datetimepicker").Include(
@@ -54,10 +53,12 @@ namespace DangKiMonHoc
 
             //Data Tables
             bundles.Add(new StyleBundle("~/css/datatables").Include(
-                      "~/css/datatables/dataTables.bootstrap.css"));
+                      "~/css/datatables/dataTables.bootstrap.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-                      "~/js/datatables/dataTables.bootstrap.js"));
+                      //"~/js/datatables/jquery-3.5.1.js",
+                      "~/js/datatables/jquery.dataTables.min.js",
+                      "~/js/datatables/dataTables.bootstrap.min.js"));
         }
 
     }

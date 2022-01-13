@@ -30,8 +30,13 @@ namespace DangKiMonHoc.Models
         [StringLength(10)]
         public string maloai { get; set; }
 
+        [StringLength(10)]
+        public string mahocky { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dangkymonhoc> dangkymonhocs { get; set; }
+
+        public virtual hocky hocky { get; set; }
 
         public virtual loaimon loaimon { get; set; }
 
