@@ -49,12 +49,14 @@
                     <tbody>
                         @foreach (var mdk in ViewData["MoDK"] as List<monhocmodk>)
                         {
-                            if ((DateTime.Compare(now, mdk.ngaymo.Value)) > 0 && (DateTime.Compare(now, mdk.ngaydong.Value)) < 0)
+                            if (mdk.close == false)
                             {
-                                foreach (var mh in ViewData["MonHoc"] as List<monhoc>)
+                                if ((DateTime.Compare(now, mdk.ngaymo.Value)) > 0 && (DateTime.Compare(now, mdk.ngaydong.Value)) < 0)
                                 {
-                                    if (mh.mamon == mdk.mamon)
+                                    foreach (var mh in ViewData["MonHoc"] as List<monhoc>)
                                     {
+                                        if (mh.mamon == mdk.mamon)
+                                        {
                                         <tr>
                                             <td>@(stttc++)</td>
                                             <td>@mdk.mamon</td>
@@ -71,6 +73,7 @@
                                                 <a href="~/SinhVien/DangKyMon/@mdk.id" role="button" class="btn btn-small btn-success"><i class="btn-icon-only fa fa-plus"> </i></a>
                                             </td>
                                         </tr>
+                                        }
                                     }
                                 }
                             }
@@ -138,12 +141,6 @@
                     </tfoot>
                 </table>
             </div>
-            @*<div class="form-actions-register">
-                    <div class="controls">
-                        <button class="btn btn-primary"><i class="fa fa-check-circle-o"></i> Xác nhận</button>
-                        <button class="btn btn-danger"><i class="fa fa-times-circle-o"></i> Hủy</button>
-                    </div>
-                </div>*@
         </div>
     </div>
 

@@ -246,6 +246,7 @@
     <Content Include="Views\Admin\Monhoc.cshtml" />
     <Content Include="Views\Admin\Qldangky.cshtml" />
     <Content Include="Views\SinhVien\DangKy.cshtml" />
+    <Content Include="Views\SinhVien\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

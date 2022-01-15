@@ -219,13 +219,23 @@ namespace DangKiMonHoc.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMon(string MaMon, string TenMon, int SoTC, int SoTCHP, string HocKy)
+        public ActionResult EditMon(string MaMon, string TenMon, int SoTC, int SoTCHP, string HK)
         {
-
+            monhoc mh = db.monhocs.Single(u => u.mamon.Equals(MaMon));
+            {
+                mh.tenmon = TenMon.Trim();
+                mh.sotinchi = SoTC;
+                mh.sotinchihocphi = SoTCHP;
+                mh.mahocky = HK;
+            };
+            db.SaveChanges();
+            TempData["Success"] = "Sửa thành công " + MaMon ;
             return RedirectToAction("Monhoc", "Admin");
         }
 
         #endregion
+
+
 
         #region Quản lý đăng ký
         [HttpGet]
@@ -358,18 +368,18 @@ namespace DangKiMonHoc.Controllers
         public ActionResult OpenSinger(string Mon, string HocKy )
         {
             var _hocky = db.hockies.Where(l => l.mahocky == HocKy).FirstOrDefault();
-            var _monhoc = db.monhocs.Where(m => m.mamon == Mon).FirstOrDefault();
+            var _monhoc = db.monhocs.Where(m => m.tenmon == Mon).FirstOrDefault();
             if (_hocky != null)
             {
                 if (_hocky != null)
                 {
                     var vs = db.monhocmodks.Where(us => us.mahocky == _hocky.mahocky).FirstOrDefault();
-                    var v = db.monhocmodks.Where(us => us.mahocky == _hocky.mahocky && us.mamon == Mon).FirstOrDefault();
+                    var v = db.monhocmodks.Where(us => us.mahocky == _hocky.mahocky && us.mamon == _monhoc.mamon).FirstOrDefault();
                     if (v == null && vs == null)
                     {
                         monhocmodk dk = new monhocmodk
                         {
-                            mamon = Mon,
+                            mamon = _monhoc.mamon,
                             mahocky = _hocky.mahocky,
                             ngaymo = null,
                             ngaydong = null,
@@ -385,7 +395,7 @@ namespace DangKiMonHoc.Controllers
                     {
                         monhocmodk tg = new monhocmodk
                         {
-                            mamon = Mon,
+                            mamon = _monhoc.mamon,
                             mahocky = _hocky.mahocky,
                             ngaymo = vs.ngaymo,
                             ngaydong = vs.ngaydong,

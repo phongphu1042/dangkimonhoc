@@ -26,8 +26,8 @@ namespace DangKiMonHoc.Controllers
             else
             {
                 var now = DateTime.Now;
-                var v = db.monhocmodks.Where(tg => tg.close == true).FirstOrDefault();
-                if (v != null)
+                var v = db.monhocmodks.Where(tg => tg.close == false).FirstOrDefault();
+                if (v == null)
                 {
                     return RedirectToAction("Index", "SinhVien");
                 }
@@ -96,5 +96,109 @@ namespace DangKiMonHoc.Controllers
         }
 
         # endregion
+
+        #region Thông tin sinh viên
+        public ActionResult Profile()
+        {
+            if (HttpContext.Session["CurrentLogin"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                string us = HttpContext.Session["CurrentLogin"].ToString();
+                ViewData["SinhVien"] = db.sinhviens.SingleOrDefault(sv => sv.mssv.Equals(us));
+                return View();
+            }
+
+        }
+        [HttpPost]
+        public ActionResult EditSV(string HoTen, int GioiTinh, DateTime NgaySinh)
+        {
+            string msv = HttpContext.Session["CurrentLogin"].ToString();
+            var v = db.web_user.Find(msv);
+            bool gt = false;
+            int vt = HoTen.LastIndexOf(' ');
+            string ten = HoTen.Substring(vt);
+            string hodem = HoTen.Remove(vt).Trim();
+            if (GioiTinh == 1)
+            {
+                gt = true;
+            }
+            if (v != null)
+            {
+
+                sinhvien sv = db.sinhviens.Single(s => s.mssv.Equals(v.mssv));
+                {
+                    sv.ten = ten;
+                    sv.hodem = hodem;
+                    sv.gioitinh = gt;
+                    sv.ngaysinh = NgaySinh;
+                };
+
+                db.SaveChanges();
+                TempData["Success"] = "Sửa thành công";
+                return RedirectToAction("Profile", "SinhVien");
+            }
+            else
+            {
+                TempData["Error"] = "Sửa thất bại!";
+                return RedirectToAction("Profile", "SinhVien");
+            }
+            return RedirectToAction("Profile", "SinhVien");
+        }
+        [HttpPost]
+        public ActionResult EditPassword(string Password, string NewPassword, string ConfirmPassword)
+        {
+            string msv = HttpContext.Session["CurrentLogin"].ToString();
+            var v = db.web_user.Find(msv);
+            if (v != null)
+            {
+                if (Password.Equals(v.password.Trim()))
+                {
+                    if (string.Compare(Password, NewPassword, true) == 0)
+                    {
+                        TempData["Error"] = "Mật khẩu cũ và mới giống nhau";
+                    }
+                    else if (string.Compare(NewPassword, ConfirmPassword, true) != 0)
+                    {
+                        TempData["Error"] = "Mật khẩu nhập lại không trùng khớp";
+                    }
+                    else
+                    {
+                        web_user wu = db.web_user.Single(w => w.mssv.Equals(v.mssv));
+                        {
+                            wu.password = NewPassword;
+
+                        }
+                        db.SaveChanges();
+                        TempData["Success"] = "Sửa thành công";
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "Sai mật khẩu";
+                    return RedirectToAction("Profile", "SinhVien");
+                }
+
+                return RedirectToAction("Profile", "SinhVien");
+            }
+            else
+            {
+                TempData["Error"] = "Sửa thất bại!";
+                return RedirectToAction("Profile", "SinhVien");
+            }
+            return RedirectToAction("Profile", "SinhVien");
+        }
+
+        #endregion
+
+
+        #region QuenMatKhau
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        #endregion
     }
 }

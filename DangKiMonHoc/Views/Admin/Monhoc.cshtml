@@ -61,18 +61,18 @@
                                     }
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i>Chỉnh sửa</button>
+                                    <button type="button" class="btn btn-default btn-danger open-editModal" data-toggle="modal" data-target="#editModal" data-mamon="@mh.mamon" data-tenmon="@mh.tenmon" data-stc="@mh.sotinchi" data-stchp="@mh.sotinchihocphi" data-mahocky="@mh.hocky.mahocky"><i class="fa fa-edit"></i>Chỉnh sửa</button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                <div id="myModal" class="modal-custom hide fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div id="editModal" class="modal-custom hide fade edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h3 id="myModalLabel">Chỉnh sửa</h3>
                     </div>
-                    @using (Html.BeginForm("AddMon", "Admin", FormMethod.Post, new { @class = "form-custom" }))
+                    @using (Html.BeginForm("EditMon", "Admin", FormMethod.Post, new { @class = "form-custom" }))
                     {
                         <div class="modal-body">
                             <div class="row">
@@ -110,7 +110,7 @@
                                 <div class="span4">
                                     <div class="control-group">
                                         <label class="control-label">Học kỳ chính của môn học:</label>
-                                        <select id="hocky" name="hocky" class="span4">
+                                        <select id="HK" name="HK" class="span4">
                                             <option disabled selected>Chọn học kỳ</option>
                                             @foreach (var item in ViewData["HocKy"] as List<hocky>)
                                             {
@@ -121,15 +121,32 @@
                                 </div>
                             </div>
                         </div>
-                    }
-                        <div class="modal-footer">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Đóng</button>
-                            <button class="btn btn-primary">Chỉnh sửa môn học</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Chỉnh sửa môn học</button>
                     </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
+    @section scripts {
+        <script type="text/javascript">
+            //Sửa
+            $(document).on("click", ".open-editModal", function () {
+                var id = $(this).data('mamon');
+                var fn = $(this).data('tenmon');
+                var un = $(this).data('stc');
+                var p = $(this).data('stchp');
+                var g = $(this).data('mahocky');
+                $(".edit-modal .modal-body .MaMon").val(id);
+                $(".edit-modal .modal-body .TenMon").val(fn);
+                $(".edit-modal .modal-body .SoTC").val(un);
+                $(".edit-modal .modal-body .SoTCHP").val(p);
+                $('#HK option[value="' + g + '"]').prop('selected', true);
+            });
+        </script>
+    }
 }
 else
 {

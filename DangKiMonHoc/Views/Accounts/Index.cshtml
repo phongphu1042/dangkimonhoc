@@ -12,11 +12,11 @@
                 <p>Vui lòng nhập thông tin của bạn</p>
                 <div class="field">
                     <label for="username">Tên tài khoản:</label>
-                    @Html.TextBox("MaTK", ViewData["MaTK"], new { @class = "login username-field", @placeholder = "Mã tài khoản(admin)", @autofocus = "true" })
+                    @Html.TextBox("MaTK", ViewData["MaTK"], new { @class = "login username-field", @placeholder = "Mã tài khoản", @autofocus = "true" })
                 </div>
                 <div class="field">
                     <label for="password">Mật khẩu:</label>
-                    @Html.Password("MatKhau", ViewData["MatKhau"], new { @class = "login password-field", @placeholder = "Mật khẩu(123)" })
+                    @Html.Password("MatKhau", ViewData["MatKhau"], new { @class = "login password-field", @placeholder = "Mật khẩu" })
                 </div>
             </div>
             <div class="login-actions">
