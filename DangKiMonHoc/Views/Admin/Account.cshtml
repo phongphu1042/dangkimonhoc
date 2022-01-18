@@ -205,7 +205,7 @@
                                 <div class="span3" style="text-align: center">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <button type="button" class="btn btn-facebook-alt"><i class="fa fa-graduation-cap"></i> Sinh viên</button>
+                                            <button type="button" class="btn btn-facebook-alt" data-dismiss="modal" aria-hidden="true" data-toggle="modal" data-target="#addModal"><i class="fa fa-briefcase"></i> Sinh viên</button>
                                         </div>
                                     </div>
                                 </div>
@@ -329,16 +329,15 @@
                 <div id="addModal" class="modal-custom hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel">Xóa người dùng</h3>
+                        <h3 id="myModalLabel">Thêm tài khoản nhanh</h3>
                     </div>
-                    @using (Html.BeginForm("DelUser", "Admin", FormMethod.Post, new { @class = "form-custom" }))
+                    @using (Html.BeginForm("AddAll", "Admin", FormMethod.Post, new { @class = "form-custom" }))
                     {
                         <div class="modal-body">
                             <div class="row">
                                 <div class="span4">
                                     <div class="control-group">
-                                        <input type="hidden" name="username" class="username" value="" />
-                                        <label class="control-label">Bạn có chắc chắn muốn xóa người dùng này?</label>
+                                        <label class="control-label">Bạn có thêm tài khoản cho tất cả sinh viên?</label>
                                     </div>
                                 </div>
                             </div>

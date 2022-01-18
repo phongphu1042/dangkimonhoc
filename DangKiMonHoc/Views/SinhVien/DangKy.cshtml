@@ -1,0 +1,197 @@
+﻿@using DangKiMonHoc.Models;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Đăng Ký Học Tập";
+    var sttkq = 1;
+    var stttc = 1;
+    var tstc = 0;
+    var thp = 0;
+
+    var now = DateTime.Now;
+}
+
+@if (Session["CurrentLogin"] != null && Session["Group"].ToString().Contains("2"))
+{
+    <div class="span6">
+        @if (TempData.ContainsKey("Error"))
+        {
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @TempData["Error"]
+            </div>
+        }
+        @if (TempData.ContainsKey("Success"))
+        {
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @TempData["Success"]
+            </div>
+        }
+
+        <div class="widget widget-table action-table">
+            <div class="widget-header">
+                <i class="fa fa-book"></i>
+                <h3>Danh sách môn học mở đăng ký</h3>
+            </div>
+            <div class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px"> STT</th>
+                            <th style="width: auto"> Mã môn</th>
+                            <th> Tên môn học</th>
+                            <th style="width: auto"> Số TC</th>
+                            <th style="width: auto"> Số TCHP</th>
+                            <th class="td-actions" style="width: 30px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mdk in ViewData["MoDK"] as List<monhocmodk>)
+                        {
+                            if (mdk.close == false)
+                            {
+                                if ((DateTime.Compare(now, mdk.ngaymo.Value)) > 0 && (DateTime.Compare(now, mdk.ngaydong.Value)) < 0)
+                                {
+                                    foreach (var mh in ViewData["MonHoc"] as List<monhoc>)
+                                    {
+                                        if (mh.mamon == mdk.mamon)
+                                        {
+                                        <tr>
+                                            <td>@(stttc++)</td>
+                                            <td>@mdk.mamon</td>
+                                            <td>
+                                                @mh.tenmon
+                                            </td>
+                                            <td style="text-align: center">
+                                                @mh.sotinchi
+                                            </td>
+                                            <td>
+                                                @mh.sotinchihocphi
+                                            </td>
+                                            <td class="td-actions">
+                                                <a href="~/SinhVien/DangKyMon/@mdk.id" role="button" class="btn btn-small btn-success"><i class="btn-icon-only fa fa-plus"> </i></a>
+                                            </td>
+                                        </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="span6">
+        <div class="widget widget-table action-table">
+            <div class="widget-header">
+                <i class="fa fa-check-circle"></i>
+                <h3>Kết quả đăng ký môn học</h3>
+            </div>
+            <div class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px"> STT</th>
+                            <th> Tên học phần</th>
+                            <th style="width: 40px"> Số TC</th>
+                            <th style="width: 90px"> Thời khóa biểu</th>
+                            <th style="width: 110px"> Học phí</th>
+                            <th class="td-actions" style="width: 30px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kqdk in ViewData["KetQuaDK"] as List<dangkymonhoc>)
+                        {
+                            foreach (var mh in ViewData["MonHoc"] as List<monhoc>)
+                            {
+                                if (mh.mamon == kqdk.mamon)
+                                {
+                                    tstc = tstc + kqdk.sotinchi.Value;
+                                    thp = thp + Int32.Parse(kqdk.sotien.ToString());
+                                    <tr>
+                                        <td>@(sttkq++)</td>
+                                        <td> @mh.tenmon</td>
+                                        <td style="text-align: center">
+                                            @mh.sotinchi
+                                        </td>
+                                        <td>Tuần 1 - 12</td>
+                                        <td>
+                                            @kqdk.sotien
+                                        </td>
+                                        <td class="td-actions">
+                                            <a href="#delModal" class="btn btn-small btn-danger open-delModal" data-id="@kqdk.id" data-toggle="modal"><i class="btn-icon-only fa fa-close"> </i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td>Tổng</td>
+                            <td>@tstc</td>
+                            <td></td>
+                            <td>@thp</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    @*Hủy đăng ký*@
+    <div id="delModal" class="modal-custom hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Hủy đăng ký</h3>
+        </div>
+        @using (Html.BeginForm("HuyDangKy", "SinhVien", FormMethod.Post, new { @class = "form-custom" }))
+        {
+            <div class="modal-body">
+                <div class="row">
+                    <div class="span4">
+                        <div class="control-group">
+                            <input type="hidden" name="ID" class="ID" value="" />
+                            <label class="control-label">Bạn có muốn hủy học phần này?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Không</button>
+                <button class="btn btn-primary" type="submit">Có</button>
+            </div>
+        }
+    </div>
+
+    @section scripts{
+        <script>
+            // show modal
+            $(".show-modal").click(function () {
+                $("#myModalContent").load(this.href, function () {
+                    $("#myModal").modal({
+                        backdrop: 'static',
+                        keyboard: true
+                    }, 'show');
+                });
+                return false;
+            });
+
+            //Hủy đăng ký
+            $(document).on("click", ".open-delModal", function () {
+                var id = $(this).data('id');
+                $(".modal-body .ID").val(id);
+            });
+        </script>
+    }
+}
+else
+{
+    Response.Redirect("~/Home/Index");
+}

@@ -8,7 +8,7 @@ namespace DangKiMonHoc.Models
     public partial class DBContext : DbContext
     {
         public DBContext()
-            : base("name=DBContext1")
+            : base("name=DBContext")
         {
         }
 
@@ -64,6 +64,10 @@ namespace DangKiMonHoc.Models
 
             modelBuilder.Entity<monhoc>()
                 .Property(e => e.maloai)
+                .IsFixedLength();
+
+            modelBuilder.Entity<monhoc>()
+                .Property(e => e.mahocky)
                 .IsFixedLength();
 
             modelBuilder.Entity<monhoc>()

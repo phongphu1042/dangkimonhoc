@@ -4,11 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Trường Đại Học Công Nghệ Sài Gòn</title>
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet" />
+
     @Styles.Render("~/css/bootstrap")
     @Styles.Render("~/css/datetimepicker")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/ckeditor")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
 <body>
     @RenderPage("~/Views/Shared/_Header.cshtml")

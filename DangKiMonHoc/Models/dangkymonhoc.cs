@@ -9,7 +9,6 @@ namespace DangKiMonHoc.Models
     [Table("dangkymonhoc")]
     public partial class dangkymonhoc
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [StringLength(10)]
